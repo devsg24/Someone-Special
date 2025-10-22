@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Anton</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: #030712;
+      color: #f3f4f6;
+      overflow-x: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      
+      /* Added to prevent text selection */
+      -webkit-user-select: none; /* Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE/Edge */
+      user-select: none; /* Standard */
+    }
+
+    .fixed-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .gradient-blob-1 {
+      position: absolute;
+      top: 0;
+      left: 25%;
+      width: 384px;
+      height: 384px;
+      background-color: rgba(20, 184, 166, 0.1);
+      border-radius: 50%;
+      filter: blur(96px);
+    }
+
+    .gradient-blob-2 {
+      position: absolute;
+      bottom: 0;
+      right: 25%;
+      width: 384px;
+      height: 384px;
+      background-color: rgba(16, 185, 129, 0.1);
+      border-radius: 50%;
+      filter: blur(96px);
+    }
+
+    /* Styles for the new JS-powered background icons */
+    .floating-icon {
+      position: fixed; /* Fixed to stay in viewport */
+      opacity: 0.04; /* Very faint */
+      pointer-events: none;
+      color: #2dd4bf;
+      will-change: transform; /* Performance hint for animation */
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 50;
+    }
+    
+    /* --- NEW Countdown Timer Styles --- */
+    #countdown-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      position: relative;
+      z-index: 100; /* On top of background icons */
+    }
+
+    .countdown-title {
+      font-size: 3rem;
+      font-weight: 600;
+      color: #f3f4f6;
+      margin-bottom: 48px;
+    }
+
+    #timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      width: 100%;
+      max-width: 800px; /* Give it a max width */
+      padding: 0 24px;
+    }
+
+    .timer-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .timer-svg {
+      width: 100%;
+      overflow: visible;
+      margin-bottom: -16px; /* Pull label up */
+    }
+
+    .timer-svg-text {
+      /* Copied from .animated-name */
+      font-family: 'Dancing Script', cursive;
+      font-weight: 700;
+      font-size: 100px;
+      fill: none;
+      stroke: #2dd4bf;
+      stroke-width: 2;
+      
+      /* Copied neon glow effect */
+      filter: 
+        drop-shadow(0 0 2px #2dd4bf)
+        drop-shadow(0 0 5px #2dd4bf)
+        drop-shadow(0 0 10px #2dd4bf);
+    }
+    
+    .timer-unit .label {
+      font-size: 1rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      
+      /* Add a subtle background to make it readable */
+      background-color: #030712;
+      padding: 0 8px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    @media (max-width: 768px) {
+      #timer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .countdown-title {
+        font-size: 2rem;
+      }
+      .timer-svg-text {
+        font-size: 80px;
+      }
+    }
+    /* --- End of Countdown Styles --- */
+    
+
+    .main-container {
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 768px;
+      transition: transform 0.3s ease-out;
+    }
+
+    .cake-icon {
+      display: inline-block;
+      margin-bottom: 32px;
+      cursor: pointer;
+      animation: gentleFloat 3s ease-in-out infinite;
+      transition: all 0.5s;
+    }
+
+    .main-title {
+      font-size: 6rem;
+      font-weight: bold;
+      margin-bottom: 24px;
+      letter-spacing: -0.025em;
+      background: linear-gradient(to right, #5eead4, #67e8f9, #6ee7b7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-bottom: 32px;
+      color: #f3f4f6;
+    }
+
+    .description {
+      font-size: 1.25rem;
+      color: #9ca3af;
+      margin-bottom: 48px;
+      max-width: 672px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.75;
+    }
+
+    .wish-button {
+      position: relative;
+      background: linear-gradient(to right, #14b8a6, #10b981);
+      color: white;
+      font-weight: 500;
+      padding: 16px 40px;
+      border-radius: 9999px;
+      font-size: 1.125rem;
+      border: none;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .wish-button:hover {
+      box-shadow: 0 20px 25px -5px rgba(20, 184, 166, 0.25), 0 10px 10px -5px rgba(20, 184, 166, 0.04);
+    }
+
+    .wish-button-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #10b981, #14b8a6);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .wish-button:hover .wish-button-overlay {
+      opacity: 1;
+    }
+
+    .wish-button-text {
+      position: relative;
+      z-index: 10;
+    }
+
+    .info-section {
+      padding: 128px 24px;
+    }
+
+    .info-container {
+      max-width: 1024px;
+      margin: 0 auto;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .info-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .info-card {
+      cursor: pointer;
+    }
+
+    .info-card-inner {
+      background-color: rgba(17, 24, 39, 0.4);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 40px;
+      border: 1px solid rgba(31, 41, 55, 0.5);
+      transition: all 0.5s;
+      height: 100%;
+    }
+
+    .info-card-inner:hover {
+      border-color: rgba(20, 184, 166, 0.3);
+    }
+
+    .info-card:nth-child(2) .info-card-inner:hover {
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .info-card:nth-child(3) .info-card-inner:hover {
+      border-color: rgba(236, 72, 153, 0.3);
+    }
+
+    .info-icon {
+      margin-bottom: 24px;
+      transition: transform 0.3s;
+      width: 40px;
+      height: 40px;
+    }
+
+    .info-card:hover .info-icon {
+      transform: scale(1.1);
+    }
+
+    .info-card:nth-child(2):hover .info-icon {
+      transform: rotate(12deg);
+    }
+
+    .info-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #f3f4f6;
+    }
+
+    .info-text {
+      color: #9ca3af;
+      line-height: 1.75;
+    }
+    
+    footer {
+      padding: 64px 24px;
+      border-top: 1px solid #111827;
+      margin-top: 64px; /* Added top margin */
+    }
+
+    .footer-content {
+      max-width: 896px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer-text {
+      color: #4b5563;
+      font-size: 0.875rem;
+    }
+
+    .footer-hint {
+      color: #374151;
+      font-size: 0.75rem;
+      margin-top: 12px;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .footer-hint:hover {
+      color: #14b8a6;
+    }
+    
+    /* --- SVG ANIMATION STYLES --- */
+    .name-svg {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 32px;
+      height: 180px; /* Increased height for larger font */
+      overflow: visible;
+    }
+
+    .animated-name {
+      font-family: 'Dancing Script', cursive;
+      font-weight: 700;
+      font-size: 150px; /* Increased font size */
+      fill: none;
+      stroke: #2dd4bf;
+      stroke-width: 2;
+      
+      stroke-dasharray: 1000; 
+      stroke-dashoffset: 1000;
+      
+      animation: draw-and-hold 4s ease-in-out infinite;
+
+      filter: 
+        drop-shadow(0 0 2px #2dd4bf)
+        drop-shadow(0 0 5px #2dd4bf)
+        drop-shadow(0 0 10px #2dd4bf);
+    }
+
+    @keyframes draw-and-hold {
+      0% {
+        stroke-dashoffset: 1000;
+      }
+      75% {
+        stroke-dashoffset: 0;
+      }
+      100% { 
+        stroke-dashoffset: 0;
+      }
+    }
+    /* --- END OF SVG STYLES --- */
+
+
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 3.5rem;
+      }
+
+      .subtitle {
+        font-size: 2.5rem;
+      }
+
+      /* Responsive styles for new SVG text */
+      .animated-name {
+        font-size: 100px; /* Increased mobile font size */
+      }
+      .name-svg {
+        height: 120px; /* Increased mobile height */
+        margin-bottom: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="fixed-bg">
+    <div class="gradient-blob-1"></div>
+    <div class="gradient-blob-2"></div>
+  </div>
+
+  <div id="floating-shapes"></div>
+  <div id="confetti-container"></div>
+
+  <div id="countdown-container">
+    <h2 class="countdown-title">Unlocking Soon...</h2>
+    <div id="timer-grid">
+      <div class="timer-unit">
+        <svg class="timer-svg" viewBox="0 0 200 150">
+          <text class="timer-svg-text" id="days" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
+        </svg>
+        <span class="label">Days</span>
+      </div>
+      <div class="timer-unit">
+        <svg class="timer-svg" viewBox="0 0 200 150">
+          <text class="timer-svg-text" id="hours" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
+        </svg>
+        <span class="label">Hours</span>
+      </div>
+      <div class="timer-unit">
+        <svg class="timer-svg" viewBox="0 0 200 150">
+          <text class="timer-svg-text" id="minutes" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
+        </svg>
+        <span class="label">Minutes</span>
+      </div>
+      <div class="timer-unit">
+        <svg class="timer-svg" viewBox="0 0 200 150">
+          <text class="timer-svg-text" id="seconds" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
+        </svg>
+        <span class="label">Seconds</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-container" id="main-content" style="display: none;">
+    
+    <section class="hero-section">
+      <div class="hero-content" id="hero-content">
+        <div class="cake-icon" id="secret-cake">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #2dd4bf;">
+            <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path>
+            <path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"></path>
+            <path d="M2 21h20"></path>
+            <path d="M7 8v3"></path>
+            <path d="M12 8v3"></path>
+            <path d="M17 8v3"></path>
+            <path d="M7 4h.01"></path>
+            <path d="M12 4h.01"></path>
+            <path d="M17 4h.01"></path>
+          </svg>
+        </div>
+        
+        <h1 class="main-title">Happy Birthday</h1>
+        
+        <svg class="name-svg" viewBox="0 0 600 200">
+          <text class="animated-name" x="50%" y="50%" dy=".35em" text-anchor="middle">
+            Anton
+          </text>
+        </svg>
+        
+        <p class="description">
+          Wishing you an incredible day filled with joy, laughter, and unforgettable moments
+        </p>
+        
+        <button id="wish-button" class="wish-button">
+          <span class="wish-button-text">Make a Wish</span>
+          <div class="wish-button-overlay"></div>
+        </button>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="info-container">
+        <div class="info-grid">
+          
+          <div class="info-card">
+            <div class="info-card-inner">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon" style="color: #2dd4bf;">
+                <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+                <path d="M12 8v13"></path>
+                <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+                <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path>
+              </svg>
+              <h3 class="info-title">Another Year</h3>
+              <p class="info-text">
+                Another chapter of amazing experiences and growth
+              </p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-card-inner">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon" style="color: #34d399;">
+                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+                <path d="M5 3v4"></path>
+                <path d="M19 17v4"></path>
+                <path d="M3 5h4"></path>
+                <path d="M17 19h4"></path>
+              </svg>
+              <h3 class="info-title">Today</h3>
+              <p class="info-text">
+                October 22, 2025 — Your special day
+              </p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-card-inner">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon" style="color: #f472b6;">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+              </svg>
+              <h3 class="info-title">Wishes</h3>
+              <p class="info-text">
+                From everyone who values you
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-content">
+        <p class="footer-text">
+          Made with care for Anton • <span id="year"></span>
+        </p>
+        <p class="footer-hint" id="hint-text">
+          ✨ Hint: Some things are hidden in plain sight
+        </p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Icon SVGs
+    const icons = {
+      sparkles: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>',
+      star: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>',
+      heart: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>',
+      balloon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-balloon"><path d="M21 12a2 2 0 0 0-2 2c0 2.2-3 3-5 3s-5-.8-5-3a2 2 0 0 0-2-2c-1.8 0-3 1-3 3s1 3 3 3h2a3 3 0 0 1 3 3c0 1.5-2 2-3 2s-3 0-3-2V8c0-1.5 1-2 1-3s.5-2 2-3c1.5 0 2 1 2 3h2c1.5 0 2 1 2 3s.5 2 2 3c1.5 0 2 1 2 3s.5 2 2 3z"/><path d="M14 13c-1.5 0-3-.5-3-2s.5-2 3-2 3 .5 3 2c0 1.5-1.5 2-3 2z"/></svg>'
+    };
+
+    // State
+    let easterEggCount = 0;
+    let secretMode = false;
+    let mousePosition = { x: 0, y: 0 };
+    let iconsArray = []; // Array to store icon physics data
+
+    // Generate bouncing icons
+    function initBackgroundIcons() {
+      const container = document.getElementById('floating-shapes');
+      const iconNames = ['sparkles', 'star', 'heart', 'balloon'];
+      
+      for (let i = 0; i < 20; i++) {
+        const div = document.createElement('div');
+        div.className = 'floating-icon';
+        
+        const size = Math.random() * 40 + 40; // Size: 40px to 80px
+        
+        const iconObj = {
+          element: div,
+          x: Math.random() * (window.innerWidth - size),
+          y: Math.random() * (window.innerHeight - size),
+          vx: (Math.random() - 0.5) * 2, // Random horizontal velocity
+          vy: (Math.random() - 0.5) * 2, // Random vertical velocity
+          size: size,
+          rotation: 0,
+          rotationSpeed: (Math.random() - 0.5) * 0.5
+        };
+
+        div.innerHTML = icons[iconNames[Math.floor(Math.random() * iconNames.length)]];
+        div.style.width = `${size}px`;
+        div.style.height = `${size}px`;
+        div.style.transform = `translate(${iconObj.x}px, ${iconObj.y}px) rotate(0deg)`;
+
+        iconsArray.push(iconObj);
+        container.appendChild(div);
+      }
+    }
+
+    // Animation loop for bouncing icons
+    function updateIconPositions() {
+      const bounds = {
+        width: window.innerWidth,
+        height: window.innerHeight
+      };
+
+      iconsArray.forEach(icon => {
+        // Update position
+        icon.x += icon.vx;
+        icon.y += icon.vy;
+        icon.rotation += icon.rotationSpeed;
+
+        // Wall collision
+        if (icon.x <= 0 || icon.x + icon.size >= bounds.width) {
+          icon.vx *= -1; // Reverse horizontal velocity
+          icon.x = Math.max(0, Math.min(icon.x, bounds.width - icon.size)); // Clamp position
+        }
+        if (icon.y <= 0 || icon.y + icon.size >= bounds.height) {
+          icon.vy *= -1; // Reverse vertical velocity
+          icon.y = Math.max(0, Math.min(icon.y, bounds.height - icon.size)); // Clamp position
+        }
+
+        // Apply new transform
+        icon.element.style.transform = `translate(${icon.x}px, ${icon.y}px) rotate(${icon.rotation}deg)`;
+      });
+
+      requestAnimationFrame(updateIconPositions); // Continue the loop
+    }
+
+    // Track mouse for parallax
+    function initMouseTracking() {
+      window.addEventListener('mousemove', (e) => {
+        mousePosition = {
+          x: (e.clientX / window.innerWidth - 0.5) * 20,
+          y: (e.clientY / window.innerHeight - 0.5) * 20
+        };
+        
+        const heroContent = document.getElementById('hero-content');
+        if(heroContent) { // Check if heroContent exists
+          heroContent.style.transform = `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`;
+        }
+      });
+    }
+
+    // Confetti effect
+    function triggerConfetti() {
+      const container = document.getElementById('confetti-container');
+      const colors = ['#30D5C8', '#20A39E', '#FFD700', '#FF6B9D', '#A78BFA'];
+      
+      for (let i = 0; i < 60; i++) {
+        const piece = document.createElement('div');
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        piece.className = 'confetti-piece';
+        piece.style.left = `${Math.random() * 100}%`;
+        piece.style.top = '-10px';
+        piece.style.backgroundColor = color;
+        piece.style.animation = `confettiFall 4s ease-out forwards`;
+        piece.style.animationDelay = `${Math.random() * 0.3}s`;
+        piece.style.boxShadow = `0 0 10px ${color}`;
+        
+        container.appendChild(piece);
+      }
+      
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 4000);
+    }
+
+    // Secret click handler
+    function handleSecretClick() {
+      easterEggCount++;
+      
+      if (easterEggCount === 7) {
+        triggerConfetti();
+        secretMode = true;
+        
+        const cakeSvg = document.querySelector('#secret-cake svg');
+        if(cakeSvg) {
+          cakeSvg.style.color = '#fbbf24';
+        }
+        
+        setTimeout(() => {
+          secretMode = false;
+          if(cakeSvg) {
+            cakeSvg.style.color = '#2dd4bf';
+          }
+        }, 4000);
+      }
+      
+      if (easterEggCount >= 15) easterEggCount = 0;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- NEW Countdown Timer Logic ---
+      
+      // Set the target date: November 13, 2025, 00:00:00 in Norway (CET = UTC+1)
+      const targetDate = new Date("2025-11-13T00:00:00+01:00");
+      
+      // Get the SVG <text> elements
+      const daysEl = document.getElementById('days');
+      const hoursEl = document.getElementById('hours');
+      const minutesEl = document.getElementById('minutes');
+      const secondsEl = document.getElementById('seconds');
+      
+      const countdownContainer = document.getElementById('countdown-container');
+      const mainContent = document.getElementById('main-content');
+
+      let timerInterval;
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate.getTime() - now.getTime();
+
+        if (diff <= 0) {
+          // Timer reached
+          clearInterval(timerInterval);
+          countdownContainer.style.display = 'none';
+          mainContent.style.display = 'block';
+          
+          // Initialize scripts for the main page *after* it's displayed
+          initMainPageScripts();
+          triggerConfetti(); // Celebrate the reveal!
+        } else {
+          // Update timer
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+          // Update the .textContent of the SVG <text> elements
+          daysEl.textContent = String(days).padStart(2, '0');
+          hoursEl.textContent = String(hours).padStart(2, '0');
+          minutesEl.textContent = String(minutes).padStart(2, '0');
+          secondsEl.textContent = String(seconds).padStart(2, '0');
+        }
+      }
+
+      timerInterval = setInterval(updateCountdown, 1000);
+      updateCountdown(); // Run once immediately
+      
+      // --- End of Countdown Logic ---
+      
+      
+      // Background icons and parallax should run regardless of the timer
+      initBackgroundIcons(); 
+      updateIconPositions(); 
+      initMouseTracking(); // This will just track, but won't do anything until #hero-content is visible
+      
+      // This function will set up the interactivity for the main page
+      function initMainPageScripts() {
+        document.getElementById('year').textContent = new Date().getFullYear();
+        document.getElementById('wish-button').addEventListener('click', triggerConfetti);
+        document.getElementById('secret-cake').addEventListener('click', handleSecretClick);
+        document.getElementById('hint-text').addEventListener('click', handleSecretClick);
+        
+        // Random confetti on first info card click
+        const firstCard = document.querySelector('.info-card');
+        if (firstCard) {
+          firstCard.addEventListener('click', () => {
+            if (Math.random() > 0.6) triggerConfetti();
+          });
+        }
+      }
+
+    });
+  </script>
+
+</body>
+</html>
