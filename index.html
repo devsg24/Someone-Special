@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,11 +21,15 @@
       color: #f3f4f6;
       overflow-x: hidden;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      
-      -webkit-user-select: none; /* Safari */
-      -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* IE/Edge */
-      user-select: none; /* Standard */
+
+      -webkit-user-select: none;
+      /* Safari */
+      -moz-user-select: none;
+      /* Firefox */
+      -ms-user-select: none;
+      /* IE/Edge */
+      user-select: none;
+      /* Standard */
     }
 
     .fixed-bg {
@@ -69,10 +74,17 @@
         opacity: 0;
       }
     }
-    
+
     @keyframes gentleFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
     }
 
     .confetti-piece {
@@ -83,7 +95,7 @@
       pointer-events: none;
       z-index: 50;
     }
-    
+
     /* --- Countdown Timer Styles --- */
     #countdown-container {
       display: flex;
@@ -98,37 +110,46 @@
 
     .countdown-title-svg {
       width: 100%;
-      max-width: 800px; 
-      height: 120px; 
+      max-width: 800px;
+      height: 120px;
       margin-bottom: 48px;
       overflow: visible;
     }
 
     .countdown-title-text {
-      font-family: inherit; 
-      font-size: 4rem; 
+      font-family: inherit;
+      font-size: 4rem;
       font-weight: 600;
       fill: none;
-      stroke: #f3f4f6; 
-      stroke-width: 1; 
-      
-      stroke-dasharray: 1500; 
+      stroke: #f3f4f6;
+      stroke-width: 1;
+
+      stroke-dasharray: 1500;
       stroke-dashoffset: 1500;
       /* Animation remains for the title */
-      animation: draw-hold-undraw-title 5s ease-in-out infinite; 
-      
-      filter: 
-        drop-shadow(0 0 2px #5eead4) 
-        drop-shadow(0 0 5px #5eead4)
-        drop-shadow(0 0 10px #5eead4);
+      animation: draw-hold-undraw-title 5s ease-in-out infinite;
+
+      filter:
+        drop-shadow(0 0 2px #5eead4) drop-shadow(0 0 5px #5eead4) drop-shadow(0 0 10px #5eead4);
     }
-    
+
     /* Animation for the title */
     @keyframes draw-hold-undraw-title {
-        0% { stroke-dashoffset: 1500; } 
-        60% { stroke-dashoffset: 0; }   
-        80% { stroke-dashoffset: 0; }   
-        100% { stroke-dashoffset: 1500; } 
+      0% {
+        stroke-dashoffset: 1500;
+      }
+
+      60% {
+        stroke-dashoffset: 0;
+      }
+
+      80% {
+        stroke-dashoffset: 0;
+      }
+
+      100% {
+        stroke-dashoffset: 1500;
+      }
     }
 
     #timer-grid {
@@ -136,7 +157,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 24px;
       width: 100%;
-      max-width: 900px; 
+      max-width: 900px;
       padding: 0 24px;
     }
 
@@ -145,34 +166,34 @@
       flex-direction: column;
       align-items: center;
     }
-    
+
     .timer-svg {
       width: 100%;
       overflow: visible;
       margin-bottom: -16px;
-      height: 120px; 
+      height: 120px;
     }
 
     .timer-svg-text {
       font-family: 'Orbitron', sans-serif;
       font-weight: 700;
-      font-size: 100px; 
+      font-size: 100px;
       fill: none;
       stroke: #2dd4bf;
       stroke-width: 2;
-      
-      filter: 
-        drop-shadow(0 0 2px #2dd4bf)
-        drop-shadow(0 0 5px #2dd4bf)
-        drop-shadow(0 0 10px #2dd4bf);
-        
+
+      filter:
+        drop-shadow(0 0 2px #2dd4bf) drop-shadow(0 0 5px #2dd4bf) drop-shadow(0 0 10px #2dd4bf);
+
       /* Remove animation properties - numbers are now static until text changes */
-      stroke-dasharray: none; /* No dash needed */
-      stroke-dashoffset: 0;   /* Always visible */
+      stroke-dasharray: none;
+      /* No dash needed */
+      stroke-dashoffset: 0;
+      /* Always visible */
     }
 
     /* REMOVED .animate-draw class and associated keyframes */
-    
+
     .timer-unit .label {
       font-size: 1rem;
       color: #9ca3af;
@@ -183,28 +204,33 @@
       position: relative;
       z-index: 1;
     }
-    
+
     @media (max-width: 768px) {
-       .countdown-title-text {
-        font-size: 2.5rem; 
+      .countdown-title-text {
+        font-size: 2.5rem;
       }
-       .countdown-title-svg {
-        height: 80px; 
+
+      .countdown-title-svg {
+        height: 80px;
       }
+
       #timer-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
-         max-width: 400px; 
+        max-width: 400px;
       }
+
       .timer-svg {
-          height: 90px; 
+        height: 90px;
       }
+
       .timer-svg-text {
-        font-size: 70px; 
+        font-size: 70px;
       }
     }
+
     /* --- End of Countdown Styles --- */
-    
+
 
     .main-container {
       position: relative;
@@ -370,11 +396,12 @@
       color: #9ca3af;
       line-height: 1.75;
     }
-    
+
     footer {
       padding: 64px 24px;
       border-top: 1px solid #111827;
-      margin-top: 64px; /* Added top margin */
+      margin-top: 64px;
+      /* Added top margin */
     }
 
     .footer-content {
@@ -399,13 +426,13 @@
     .footer-hint:hover {
       color: #14b8a6;
     }
-    
+
     /* --- SVG ANIMATION STYLES (for "Anton") --- */
     .name-svg {
       width: 100%;
       max-width: 600px;
       margin-bottom: 32px;
-      height: 180px; 
+      height: 180px;
       overflow: visible;
     }
 
@@ -416,24 +443,31 @@
       fill: none;
       stroke: #2dd4bf;
       stroke-width: 2;
-      
-      stroke-dasharray: 1000; 
+
+      stroke-dasharray: 1000;
       stroke-dashoffset: 1000;
-      
+
       animation: draw-and-hold 4s ease-in-out infinite;
 
-      filter: 
-        drop-shadow(0 0 2px #2dd4bf)
-        drop-shadow(0 0 5px #2dd4bf)
-        drop-shadow(0 0 10px #2dd4bf);
+      filter:
+        drop-shadow(0 0 2px #2dd4bf) drop-shadow(0 0 5px #2dd4bf) drop-shadow(0 0 10px #2dd4bf);
     }
 
     /* 4-second animation for "Anton" */
     @keyframes draw-and-hold {
-      0% { stroke-dashoffset: 1000; }
-      75% { stroke-dashoffset: 0; }
-      100% { stroke-dashoffset: 0; }
+      0% {
+        stroke-dashoffset: 1000;
+      }
+
+      75% {
+        stroke-dashoffset: 0;
+      }
+
+      100% {
+        stroke-dashoffset: 0;
+      }
     }
+
     /* --- END OF SVG STYLES --- */
 
 
@@ -450,6 +484,7 @@
       .animated-name {
         font-size: 100px;
       }
+
       .name-svg {
         height: 120px;
         margin-bottom: 24px;
@@ -457,8 +492,9 @@
     }
   </style>
 </head>
+
 <body>
-  
+
   <div class="fixed-bg">
     <div class="gradient-blob-1"></div>
     <div class="gradient-blob-2"></div>
@@ -468,32 +504,32 @@
   <div id="confetti-container"></div>
 
   <div id="countdown-container">
-    <svg class="countdown-title-svg" viewBox="0 0 800 120"> 
+    <svg class="countdown-title-svg" viewBox="0 0 800 120">
       <text class="countdown-title-text" x="50%" y="50%" dy=".35em" text-anchor="middle">
         Unlocking Soon...
       </text>
     </svg>
     <div id="timer-grid">
       <div class="timer-unit">
-        <svg class="timer-svg" viewBox="0 0 250 200"> 
+        <svg class="timer-svg" viewBox="0 0 250 200">
           <text class="timer-svg-text" id="days" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
         </svg>
         <span class="label">Days</span>
       </div>
       <div class="timer-unit">
-        <svg class="timer-svg" viewBox="0 0 250 200"> 
+        <svg class="timer-svg" viewBox="0 0 250 200">
           <text class="timer-svg-text" id="hours" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
         </svg>
         <span class="label">Hours</span>
       </div>
       <div class="timer-unit">
-        <svg class="timer-svg" viewBox="0 0 250 200"> 
+        <svg class="timer-svg" viewBox="0 0 250 200">
           <text class="timer-svg-text" id="minutes" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
         </svg>
         <span class="label">Minutes</span>
       </div>
       <div class="timer-unit">
-        <svg class="timer-svg" viewBox="0 0 250 200"> 
+        <svg class="timer-svg" viewBox="0 0 250 200">
           <text class="timer-svg-text" id="seconds" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
         </svg>
         <span class="label">Seconds</span>
@@ -502,11 +538,13 @@
   </div>
 
   <div class="main-container" id="main-content" style="display: none;">
-    
+
     <section class="hero-section">
       <div class="hero-content" id="hero-content">
         <div class="cake-icon" id="secret-cake">
-          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #2dd4bf;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="color: #2dd4bf;">
             <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path>
             <path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"></path>
             <path d="M2 21h20"></path>
@@ -518,19 +556,19 @@
             <path d="M17 4h.01"></path>
           </svg>
         </div>
-        
+
         <h1 class="main-title">Happy Birthday</h1>
-        
+
         <svg class="name-svg" viewBox="0 0 600 200">
           <text class="animated-name" x="50%" y="50%" dy=".35em" text-anchor="middle">
             Anton
           </text>
         </svg>
-        
+
         <p class="description">
           Wishing you an incredible day filled with joy, laughter, and unforgettable moments
         </p>
-        
+
         <button id="wish-button" class="wish-button">
           <span class="wish-button-text">Make a Wish</span>
           <div class="wish-button-overlay"></div>
@@ -541,10 +579,12 @@
     <section class="info-section">
       <div class="info-container">
         <div class="info-grid">
-          
+
           <div class="info-card">
             <div class="info-card-inner">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon" style="color: #2dd4bf;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon"
+                style="color: #2dd4bf;">
                 <rect x="3" y="8" width="18" height="4" rx="1"></rect>
                 <path d="M12 8v13"></path>
                 <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
@@ -559,8 +599,12 @@
 
           <div class="info-card">
             <div class="info-card-inner">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon" style="color: #34d399;">
-                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon"
+                style="color: #34d399;">
+                <path
+                  d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z">
+                </path>
                 <path d="M5 3v4"></path>
                 <path d="M19 17v4"></path>
                 <path d="M3 5h4"></path>
@@ -575,8 +619,12 @@
 
           <div class="info-card">
             <div class="info-card-inner">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon" style="color: #f472b6;">
-                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon"
+                style="color: #f472b6;">
+                <path
+                  d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+                </path>
               </svg>
               <h3 class="info-title">Wishes</h3>
               <p class="info-text">
@@ -615,25 +663,25 @@
     let easterEggCount = 0;
     let secretMode = false;
     let mousePosition = { x: 0, y: 0 };
-    let iconsArray = []; 
+    let iconsArray = [];
 
     // Generate bouncing icons
     function initBackgroundIcons() {
       const container = document.getElementById('floating-shapes');
       const iconNames = ['sparkles', 'star', 'heart', 'balloon'];
-      
+
       for (let i = 0; i < 20; i++) {
         const div = document.createElement('div');
         div.className = 'floating-icon';
-        
-        const size = Math.random() * 40 + 40; 
-        
+
+        const size = Math.random() * 40 + 40;
+
         const iconObj = {
           element: div,
           x: Math.random() * (window.innerWidth - size),
           y: Math.random() * (window.innerHeight - size),
-          vx: (Math.random() - 0.5) * 2, 
-          vy: (Math.random() - 0.5) * 2, 
+          vx: (Math.random() - 0.5) * 2,
+          vy: (Math.random() - 0.5) * 2,
           size: size,
           rotation: 0,
           rotationSpeed: (Math.random() - 0.5) * 0.5
@@ -662,18 +710,18 @@
         icon.rotation += icon.rotationSpeed;
 
         if (icon.x <= 0 || icon.x + icon.size >= bounds.width) {
-          icon.vx *= -1; 
-          icon.x = Math.max(0, Math.min(icon.x, bounds.width - icon.size)); 
+          icon.vx *= -1;
+          icon.x = Math.max(0, Math.min(icon.x, bounds.width - icon.size));
         }
         if (icon.y <= 0 || icon.y + icon.size >= bounds.height) {
-          icon.vy *= -1; 
-          icon.y = Math.max(0, Math.min(icon.y, bounds.height - icon.size)); 
+          icon.vy *= -1;
+          icon.y = Math.max(0, Math.min(icon.y, bounds.height - icon.size));
         }
 
         icon.element.style.transform = `translate(${icon.x}px, ${icon.y}px) rotate(${icon.rotation}deg)`;
       });
 
-      requestAnimationFrame(updateIconPositions); 
+      requestAnimationFrame(updateIconPositions);
     }
 
     // Track mouse for parallax
@@ -683,9 +731,9 @@
           x: (e.clientX / window.innerWidth - 0.5) * 20,
           y: (e.clientY / window.innerHeight - 0.5) * 20
         };
-        
+
         const heroContent = document.getElementById('hero-content');
-        if(heroContent) { 
+        if (heroContent) {
           heroContent.style.transform = `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`;
         }
       });
@@ -695,11 +743,11 @@
     function triggerConfetti() {
       const container = document.getElementById('confetti-container');
       const colors = ['#30D5C8', '#20A39E', '#FFD700', '#FF6B9D', '#A78BFA'];
-      
+
       for (let i = 0; i < 60; i++) {
         const piece = document.createElement('div');
         const color = colors[Math.floor(Math.random() * colors.length)];
-        
+
         piece.className = 'confetti-piece';
         piece.style.left = `${Math.random() * 100}%`;
         piece.style.top = '-10px';
@@ -707,10 +755,10 @@
         piece.style.animation = `confettiFall 4s ease-out forwards`;
         piece.style.animationDelay = `${Math.random() * 0.3}s`;
         piece.style.boxShadow = `0 0 10px ${color}`;
-        
+
         container.appendChild(piece);
       }
-      
+
       setTimeout(() => {
         container.innerHTML = '';
       }, 4000);
@@ -719,56 +767,56 @@
     // Secret click handler
     function handleSecretClick() {
       easterEggCount++;
-      
+
       if (easterEggCount === 7) {
         triggerConfetti();
         secretMode = true;
-        
+
         const cakeSvg = document.querySelector('#secret-cake svg');
-        if(cakeSvg) {
+        if (cakeSvg) {
           cakeSvg.style.color = '#fbbf24';
         }
-        
+
         setTimeout(() => {
           secretMode = false;
-          if(cakeSvg) {
+          if (cakeSvg) {
             cakeSvg.style.color = '#2dd4bf';
           }
         }, 4000);
       }
-      
+
       if (easterEggCount >= 15) easterEggCount = 0;
     }
 
     // Function to trigger animation on an element
     function triggerElementAnimation(element) {
-        if (!element) return;
-        // Remove class immediately
-        element.classList.remove('animate-draw'); 
-        // Force reflow/repaint to ensure removal is registered
-        void element.offsetWidth; 
-        // Add class back slightly later to restart animation
-        setTimeout(() => {
-          element.classList.add('animate-draw');
-        }, 10); // Small delay
+      if (!element) return;
+      // Remove class immediately
+      element.classList.remove('animate-draw');
+      // Force reflow/repaint to ensure removal is registered
+      void element.offsetWidth;
+      // Add class back slightly later to restart animation
+      setTimeout(() => {
+        element.classList.add('animate-draw');
+      }, 10); // Small delay
     }
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       // --- Countdown Timer Logic ---
-      
+
       const targetDate = new Date("2025-11-13T00:00:00+01:00");
-      
+
       const daysEl = document.getElementById('days');
       const hoursEl = document.getElementById('hours');
       const minutesEl = document.getElementById('minutes');
       const secondsEl = document.getElementById('seconds');
-      
+
       const countdownContainer = document.getElementById('countdown-container');
       const mainContent = document.getElementById('main-content');
 
       let timerInterval;
-      let prev = { days: -1, hours: -1, minutes: -1, seconds: -1 }; 
+      let prev = { days: -1, hours: -1, minutes: -1, seconds: -1 };
 
       function updateCountdown() {
         const now = new Date();
@@ -778,9 +826,9 @@
           clearInterval(timerInterval);
           countdownContainer.style.display = 'none';
           mainContent.style.display = 'block';
-          
+
           initMainPageScripts();
-          triggerConfetti(); 
+          triggerConfetti();
         } else {
           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -815,19 +863,19 @@
 
       timerInterval = setInterval(updateCountdown, 1000);
       updateCountdown(); // Run once to initialize and potentially trigger initial animations
-      
+
       // --- End of Countdown Logic ---
-      
-      initBackgroundIcons(); 
-      updateIconPositions(); 
-      initMouseTracking(); 
-      
+
+      initBackgroundIcons();
+      updateIconPositions();
+      initMouseTracking();
+
       function initMainPageScripts() {
         document.getElementById('year').textContent = new Date().getFullYear();
         document.getElementById('wish-button').addEventListener('click', triggerConfetti);
         document.getElementById('secret-cake').addEventListener('click', handleSecretClick);
         document.getElementById('hint-text').addEventListener('click', handleSecretClick);
-        
+
         const firstCard = document.querySelector('.info-card');
         if (firstCard) {
           firstCard.addEventListener('click', () => {
@@ -840,4 +888,5 @@
   </script>
 
 </body>
+
 </html>
