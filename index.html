@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday Anton</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+    /* Import both fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Orbitron:wght@700&display=swap');
 
     * {
       margin: 0;
@@ -20,7 +21,6 @@
       overflow-x: hidden;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       
-      /* Added to prevent text selection */
       -webkit-user-select: none; /* Safari */
       -moz-user-select: none; /* Firefox */
       -ms-user-select: none; /* IE/Edge */
@@ -55,13 +55,12 @@
       filter: blur(96px);
     }
 
-    /* Styles for the new JS-powered background icons */
     .floating-icon {
-      position: fixed; /* Fixed to stay in viewport */
-      opacity: 0.04; /* Very faint */
+      position: fixed;
+      opacity: 0.04;
       pointer-events: none;
       color: #2dd4bf;
-      will-change: transform; /* Performance hint for animation */
+      will-change: transform;
     }
 
     @keyframes confettiFall {
@@ -85,7 +84,7 @@
       z-index: 50;
     }
     
-    /* --- NEW Countdown Timer Styles --- */
+    /* --- Countdown Timer Styles --- */
     #countdown-container {
       display: flex;
       flex-direction: column;
@@ -94,14 +93,42 @@
       min-height: 100vh;
       text-align: center;
       position: relative;
-      z-index: 100; /* On top of background icons */
+      z-index: 100;
     }
 
-    .countdown-title {
-      font-size: 3rem;
-      font-weight: 600;
-      color: #f3f4f6;
+    .countdown-title-svg {
+      width: 100%;
+      max-width: 800px; 
+      height: 120px; 
       margin-bottom: 48px;
+      overflow: visible;
+    }
+
+    .countdown-title-text {
+      font-family: inherit; 
+      font-size: 4rem; 
+      font-weight: 600;
+      fill: none;
+      stroke: #f3f4f6; 
+      stroke-width: 1; 
+      
+      stroke-dasharray: 1500; 
+      stroke-dashoffset: 1500;
+      /* Animation remains for the title */
+      animation: draw-hold-undraw-title 5s ease-in-out infinite; 
+      
+      filter: 
+        drop-shadow(0 0 2px #5eead4) 
+        drop-shadow(0 0 5px #5eead4)
+        drop-shadow(0 0 10px #5eead4);
+    }
+    
+    /* Animation for the title */
+    @keyframes draw-hold-undraw-title {
+        0% { stroke-dashoffset: 1500; } 
+        60% { stroke-dashoffset: 0; }   
+        80% { stroke-dashoffset: 0; }   
+        100% { stroke-dashoffset: 1500; } 
     }
 
     #timer-grid {
@@ -109,7 +136,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 24px;
       width: 100%;
-      max-width: 800px; /* Give it a max width */
+      max-width: 900px; 
       padding: 0 24px;
     }
 
@@ -122,32 +149,35 @@
     .timer-svg {
       width: 100%;
       overflow: visible;
-      margin-bottom: -16px; /* Pull label up */
+      margin-bottom: -16px;
+      height: 120px; 
     }
 
     .timer-svg-text {
-      /* Copied from .animated-name */
-      font-family: 'Dancing Script', cursive;
+      font-family: 'Orbitron', sans-serif;
       font-weight: 700;
-      font-size: 100px;
+      font-size: 100px; 
       fill: none;
       stroke: #2dd4bf;
       stroke-width: 2;
       
-      /* Copied neon glow effect */
       filter: 
         drop-shadow(0 0 2px #2dd4bf)
         drop-shadow(0 0 5px #2dd4bf)
         drop-shadow(0 0 10px #2dd4bf);
+        
+      /* Remove animation properties - numbers are now static until text changes */
+      stroke-dasharray: none; /* No dash needed */
+      stroke-dashoffset: 0;   /* Always visible */
     }
+
+    /* REMOVED .animate-draw class and associated keyframes */
     
     .timer-unit .label {
       font-size: 1rem;
       color: #9ca3af;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      
-      /* Add a subtle background to make it readable */
       background-color: #030712;
       padding: 0 8px;
       position: relative;
@@ -155,15 +185,22 @@
     }
     
     @media (max-width: 768px) {
+       .countdown-title-text {
+        font-size: 2.5rem; 
+      }
+       .countdown-title-svg {
+        height: 80px; 
+      }
       #timer-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
+         max-width: 400px; 
       }
-      .countdown-title {
-        font-size: 2rem;
+      .timer-svg {
+          height: 90px; 
       }
       .timer-svg-text {
-        font-size: 80px;
+        font-size: 70px; 
       }
     }
     /* --- End of Countdown Styles --- */
@@ -363,19 +400,19 @@
       color: #14b8a6;
     }
     
-    /* --- SVG ANIMATION STYLES --- */
+    /* --- SVG ANIMATION STYLES (for "Anton") --- */
     .name-svg {
       width: 100%;
       max-width: 600px;
       margin-bottom: 32px;
-      height: 180px; /* Increased height for larger font */
+      height: 180px; 
       overflow: visible;
     }
 
     .animated-name {
       font-family: 'Dancing Script', cursive;
       font-weight: 700;
-      font-size: 150px; /* Increased font size */
+      font-size: 150px;
       fill: none;
       stroke: #2dd4bf;
       stroke-width: 2;
@@ -391,16 +428,11 @@
         drop-shadow(0 0 10px #2dd4bf);
     }
 
+    /* 4-second animation for "Anton" */
     @keyframes draw-and-hold {
-      0% {
-        stroke-dashoffset: 1000;
-      }
-      75% {
-        stroke-dashoffset: 0;
-      }
-      100% { 
-        stroke-dashoffset: 0;
-      }
+      0% { stroke-dashoffset: 1000; }
+      75% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 0; }
     }
     /* --- END OF SVG STYLES --- */
 
@@ -416,10 +448,10 @@
 
       /* Responsive styles for new SVG text */
       .animated-name {
-        font-size: 100px; /* Increased mobile font size */
+        font-size: 100px;
       }
       .name-svg {
-        height: 120px; /* Increased mobile height */
+        height: 120px;
         margin-bottom: 24px;
       }
     }
@@ -436,28 +468,32 @@
   <div id="confetti-container"></div>
 
   <div id="countdown-container">
-    <h2 class="countdown-title">Unlocking Soon...</h2>
+    <svg class="countdown-title-svg" viewBox="0 0 800 120"> 
+      <text class="countdown-title-text" x="50%" y="50%" dy=".35em" text-anchor="middle">
+        Unlocking Soon...
+      </text>
+    </svg>
     <div id="timer-grid">
       <div class="timer-unit">
-        <svg class="timer-svg" viewBox="0 0 200 150">
+        <svg class="timer-svg" viewBox="0 0 250 200"> 
           <text class="timer-svg-text" id="days" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
         </svg>
         <span class="label">Days</span>
       </div>
       <div class="timer-unit">
-        <svg class="timer-svg" viewBox="0 0 200 150">
+        <svg class="timer-svg" viewBox="0 0 250 200"> 
           <text class="timer-svg-text" id="hours" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
         </svg>
         <span class="label">Hours</span>
       </div>
       <div class="timer-unit">
-        <svg class="timer-svg" viewBox="0 0 200 150">
+        <svg class="timer-svg" viewBox="0 0 250 200"> 
           <text class="timer-svg-text" id="minutes" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
         </svg>
         <span class="label">Minutes</span>
       </div>
       <div class="timer-unit">
-        <svg class="timer-svg" viewBox="0 0 200 150">
+        <svg class="timer-svg" viewBox="0 0 250 200"> 
           <text class="timer-svg-text" id="seconds" x="50%" y="50%" dy=".35em" text-anchor="middle">00</text>
         </svg>
         <span class="label">Seconds</span>
@@ -579,7 +615,7 @@
     let easterEggCount = 0;
     let secretMode = false;
     let mousePosition = { x: 0, y: 0 };
-    let iconsArray = []; // Array to store icon physics data
+    let iconsArray = []; 
 
     // Generate bouncing icons
     function initBackgroundIcons() {
@@ -590,14 +626,14 @@
         const div = document.createElement('div');
         div.className = 'floating-icon';
         
-        const size = Math.random() * 40 + 40; // Size: 40px to 80px
+        const size = Math.random() * 40 + 40; 
         
         const iconObj = {
           element: div,
           x: Math.random() * (window.innerWidth - size),
           y: Math.random() * (window.innerHeight - size),
-          vx: (Math.random() - 0.5) * 2, // Random horizontal velocity
-          vy: (Math.random() - 0.5) * 2, // Random vertical velocity
+          vx: (Math.random() - 0.5) * 2, 
+          vy: (Math.random() - 0.5) * 2, 
           size: size,
           rotation: 0,
           rotationSpeed: (Math.random() - 0.5) * 0.5
@@ -621,26 +657,23 @@
       };
 
       iconsArray.forEach(icon => {
-        // Update position
         icon.x += icon.vx;
         icon.y += icon.vy;
         icon.rotation += icon.rotationSpeed;
 
-        // Wall collision
         if (icon.x <= 0 || icon.x + icon.size >= bounds.width) {
-          icon.vx *= -1; // Reverse horizontal velocity
-          icon.x = Math.max(0, Math.min(icon.x, bounds.width - icon.size)); // Clamp position
+          icon.vx *= -1; 
+          icon.x = Math.max(0, Math.min(icon.x, bounds.width - icon.size)); 
         }
         if (icon.y <= 0 || icon.y + icon.size >= bounds.height) {
-          icon.vy *= -1; // Reverse vertical velocity
-          icon.y = Math.max(0, Math.min(icon.y, bounds.height - icon.size)); // Clamp position
+          icon.vy *= -1; 
+          icon.y = Math.max(0, Math.min(icon.y, bounds.height - icon.size)); 
         }
 
-        // Apply new transform
         icon.element.style.transform = `translate(${icon.x}px, ${icon.y}px) rotate(${icon.rotation}deg)`;
       });
 
-      requestAnimationFrame(updateIconPositions); // Continue the loop
+      requestAnimationFrame(updateIconPositions); 
     }
 
     // Track mouse for parallax
@@ -652,7 +685,7 @@
         };
         
         const heroContent = document.getElementById('hero-content');
-        if(heroContent) { // Check if heroContent exists
+        if(heroContent) { 
           heroContent.style.transform = `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`;
         }
       });
@@ -707,14 +740,25 @@
       if (easterEggCount >= 15) easterEggCount = 0;
     }
 
+    // Function to trigger animation on an element
+    function triggerElementAnimation(element) {
+        if (!element) return;
+        // Remove class immediately
+        element.classList.remove('animate-draw'); 
+        // Force reflow/repaint to ensure removal is registered
+        void element.offsetWidth; 
+        // Add class back slightly later to restart animation
+        setTimeout(() => {
+          element.classList.add('animate-draw');
+        }, 10); // Small delay
+    }
+
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
-      // --- NEW Countdown Timer Logic ---
+      // --- Countdown Timer Logic ---
       
-      // Set the target date: November 13, 2025, 00:00:00 in Norway (CET = UTC+1)
       const targetDate = new Date("2025-11-13T00:00:00+01:00");
       
-      // Get the SVG <text> elements
       const daysEl = document.getElementById('days');
       const hoursEl = document.getElementById('hours');
       const minutesEl = document.getElementById('minutes');
@@ -724,54 +768,66 @@
       const mainContent = document.getElementById('main-content');
 
       let timerInterval;
+      let prev = { days: -1, hours: -1, minutes: -1, seconds: -1 }; 
 
       function updateCountdown() {
         const now = new Date();
         const diff = targetDate.getTime() - now.getTime();
 
         if (diff <= 0) {
-          // Timer reached
           clearInterval(timerInterval);
           countdownContainer.style.display = 'none';
           mainContent.style.display = 'block';
           
-          // Initialize scripts for the main page *after* it's displayed
           initMainPageScripts();
-          triggerConfetti(); // Celebrate the reveal!
+          triggerConfetti(); 
         } else {
-          // Update timer
           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-          // Update the .textContent of the SVG <text> elements
+          // Update text CONTENT immediately
           daysEl.textContent = String(days).padStart(2, '0');
           hoursEl.textContent = String(hours).padStart(2, '0');
           minutesEl.textContent = String(minutes).padStart(2, '0');
           secondsEl.textContent = String(seconds).padStart(2, '0');
+
+          // Trigger animation ONLY if value changed
+          if (days !== prev.days) {
+            triggerElementAnimation(daysEl);
+            prev.days = days;
+          }
+          if (hours !== prev.hours) {
+            triggerElementAnimation(hoursEl);
+            prev.hours = hours;
+          }
+          if (minutes !== prev.minutes) {
+            triggerElementAnimation(minutesEl);
+            prev.minutes = minutes;
+          }
+          if (seconds !== prev.seconds) {
+            triggerElementAnimation(secondsEl);
+            prev.seconds = seconds;
+          }
         }
       }
 
       timerInterval = setInterval(updateCountdown, 1000);
-      updateCountdown(); // Run once immediately
+      updateCountdown(); // Run once to initialize and potentially trigger initial animations
       
       // --- End of Countdown Logic ---
       
-      
-      // Background icons and parallax should run regardless of the timer
       initBackgroundIcons(); 
       updateIconPositions(); 
-      initMouseTracking(); // This will just track, but won't do anything until #hero-content is visible
+      initMouseTracking(); 
       
-      // This function will set up the interactivity for the main page
       function initMainPageScripts() {
         document.getElementById('year').textContent = new Date().getFullYear();
         document.getElementById('wish-button').addEventListener('click', triggerConfetti);
         document.getElementById('secret-cake').addEventListener('click', handleSecretClick);
         document.getElementById('hint-text').addEventListener('click', handleSecretClick);
         
-        // Random confetti on first info card click
         const firstCard = document.querySelector('.info-card');
         if (firstCard) {
           firstCard.addEventListener('click', () => {
